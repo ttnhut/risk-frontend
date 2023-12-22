@@ -1,0 +1,90 @@
+
+<table class="table table-hover table-nowrap table-responsive">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">Tên</th>
+            <th scope="col">Ngày tạo</th>
+            <th scope="col">Lớp học</th>
+            <th scope="col">Hình ảnh</th>
+            <th scope="col">Được tạo bởi</th>
+            <th scope="col">Cập nhật trạng thái</th>
+            <th scope="col">Ngày hoàn thành</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let risk of rirksOfUser; index as i">
+            <td>
+                <img alt="..." src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="avatar avatar-sm rounded-circle me-2">
+                <a class="text-heading font-semibold" href="#">
+                    {{risk.name}}
+                </a>
+            </td>
+            <td>
+                {{risk.createdDate | date:'dd/MM/Y'}}
+            </td>
+            <td>
+                {{risk.reportedClass.value}}
+            </td>
+            <td>
+                <a [href]="risk.image" target="_blank"><img [src]="risk.image"/></a>
+            </td>
+            <td>
+                <span class="badge badge-lg badge-dot">
+                    <span *ngIf="risk.reporter != null; else nonReporter"><i class="bg-success"></i> {{risk.reporter.email}}</span>
+                    <ng-template #nonReporter>
+                        <i class="bg-danger"></i>Lỗi
+                    </ng-template>
+                </span>
+            </td>
+            <td>
+                <select (change)="updateRisk($event, risk.id)">
+                   
+                    <ng-container *ngFor="let progressType of progressTypes">
+                        <option *ngIf="progressType.value == risk.progress.value" selected>{{progressType.value}}</option>
+                        <option *ngIf="progressType.value != risk.progress.value">{{progressType.value}}</option>
+                    </ng-container>
+                  
+                </select>
+                <div *ngIf="isDataSended">
+                    <div class="spinner-border" role="status">
+                    </div>
+                  </div>
+            </td>
+            <td>
+                <span class="badge badge-lg badge-dot">
+                    <span *ngIf="risk.completedDate != null; else nonCreatedDate"><i class="bg-success"></i> {{risk.completedDate | date:'dd/MM/Y'}}</span>
+                    <ng-template #nonCreatedDate>
+                        <i class="bg-danger"></i>Đang xử lý
+                    </ng-template>
+                </span>
+            </td>
+            <td class="text-end">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn" data-bs-toggle="modal" [attr.data-bs-target]="'#exampleModal' + i">
+                    Xem mô tả
+                </button>
+            </td>
+            <!-- Modal -->
+            <div class="modal fade #exampleModal{{i}}" id="exampleModal{{i}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content modalSize">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Mô tả vấn đề</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{risk.description}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </tr>                                                                                                                                                                                                                                                       
+    </tbody>
+</table>

@@ -1,0 +1,76 @@
+<div class="container">
+	<header class="header">
+		<h1 id="title" class="text-center">Tạo ticket</h1>
+		<p id="description" class="text-center alert alert-danger">  
+                Vui lòng nhập đầy đủ thông tin một cách kỹ càng ! Ticket khi được tạo ra sẽ không thể xóa.
+		</p>
+	</header>
+	<div class="form-wrap">	
+		<form id="survey-form" (ngSubmit)="saveRisk()">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label id="name-label" for="name">Tên vấn đề</label>
+						<input [(ngModel)]="risk.name" type="text" name="name" id="name" placeholder="Tên của vấn đề" class="form-control" required>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label id="email-label" for="description">Mô tả</label>
+						<input [(ngModel)]="risk.description" type="text" name="description" id="description" placeholder="Mô tả vấn đề" class="form-control" required>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label id="number-label" for="number">Hình ảnh</label>
+						<input (change) = "onChangeFileField($event)" type="file" name="age" id="number" min="10" max="99" class="form-control" placeholder="Age" >
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Cấp độ</label>
+                        <select [(ngModel)]="risk.level.id" id="dropdown" name="level" class="form-control" required>   
+                            <ng-container *ngFor="let levelType of levelTypes; let i = index">
+                              <option [value]="levelType.id">{{ levelType.value }}</option>
+                            </ng-container>    
+                        </select>
+					</div>
+				</div>
+                <div class="col-md-6">
+					<div class="form-group">
+						<label>Lớp học</label>
+						<select [(ngModel)]="risk.reportedClass.id" id="dropdown" name="class" class="form-control" required>   
+                            <ng-container *ngFor="let classType of classTypes; let i = index">
+                              <option [value]="classType.id">{{ classType.value }}</option>
+                            </ng-container>    
+                        </select>
+					</div>
+				</div>
+                <div class="col-md-6">
+					<div class="form-group">
+						<label>Loại</label>
+						<select [(ngModel)]="risk.riskType.id" id="dropdown" name="type" class="form-control" required>   
+                            <ng-container *ngFor="let riskType of riskTypes; let i = index">
+                              <option [value]="riskType.id">{{ riskType.value }}</option>
+                            </ng-container>    
+                        </select>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-4">
+					<button type="submit" id="submit" class="btn btn-primary btn-block">Tạo</button>
+                    <div *ngIf="isDataSended">
+                        <div class="spinner-border" role="status">
+                        </div>
+                      </div>
+				</div>
+			</div>
+
+		</form>
+	</div>	
+</div>

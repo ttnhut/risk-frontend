@@ -1,0 +1,44 @@
+<section class="user">
+    <div class="user_options-container">
+      <div class="user_options-text">
+        <div class="user_options-unregistered">
+          <h2 class="user_unregistered-title">Bạn chưa có tài khoản?</h2>
+          <p class="user_unregistered-text">Gia nhập hệ thống quản trị rủi ro UTC2</p>
+          <a [routerLink]="'/signup'"><button class="user_unregistered-signup" id="signup-button">Đăng ký</button></a>
+        </div>
+  
+        <div class="user_options-registered">
+          <h2 class="user_registered-title">Have an account?</h2>
+          <p class="user_registered-text">Banjo tote bag bicycle rights, High Life sartorial cray craft beer whatever street art fap.</p>
+          <button class="user_registered-login" id="login-button">Login</button>
+        </div>
+      </div>
+      
+      <div class="user_options-forms" id="user_options-forms">
+        <div class="user_forms-login">
+          <h2 class="forms_title">Đăng nhập</h2>
+          <form (ngSubmit)="loginUser()" class="forms_form">
+            <fieldset class="forms_fieldset">
+              <div class="forms_field">
+                <input [(ngModel)]="user.email" name="email" type="email" placeholder="Email của bạn" class="forms_field-input" required autofocus />
+              </div>
+              <div class="forms_field">
+                <input [(ngModel)]="user.password" name="password" type="password" placeholder="Mật khẩu của bạn" class="forms_field-input" required />
+              </div>
+            </fieldset>
+            <div class="forms_buttons">
+              <a [routerLink]="'/forgot-password'"><button type="button" class="forms_buttons-forgot">Quên mật khẩu?</button></a>
+              <input type="submit" value="Đăng nhập" class="forms_buttons-action">
+              <div *ngIf="isDataSended">
+                <div class="spinner-border" role="status">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="user_forms-signup">
+          <h2 class="forms_title">Đăng ký</h2>
+        </div>
+      </div>
+    </div>
+  </section>

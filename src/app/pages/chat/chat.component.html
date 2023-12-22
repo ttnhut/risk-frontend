@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="row">
+          <div class="col-md-6 mx-auto">
+              <div class="card">
+                  <div class="card-header text-center">
+                      <span>Chat Box</span>
+                  </div>
+                  <div class="card-body chat-care">
+                      <ul class="chat">
+                          <li *ngFor="let message of socketService.getMessage()" class="admin clearfix">
+                              <span class="chat-img right clearfix  mx-2">
+                                  <img src="https://utc2.edu.vn/logo-icon.png" alt="Admin" class="img-circle" />
+                              </span>
+                              <div class="chat-body clearfix">
+                                  <div class="header clearfix">
+                                      <strong class="right primary-font">{{message.from}}</strong>
+                                  </div>
+                                  <p>
+                                      {{message.text}}
+                                  </p>
+                              </div>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="card-footer">
+                      <form (ngSubmit)="sendMessage()" class="input-group">
+                          <input [(ngModel)]="message.text" name="text" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                          <span class="input-group-btn">
+                              <button class="btn btn-primary" id="btn-chat" type="submit">
+                                  Send</button>
+                          </span>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>

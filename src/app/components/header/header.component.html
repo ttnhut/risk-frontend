@@ -1,0 +1,46 @@
+<nav class="navbar navbar-expand-md bg-body-tertiary">
+    <div class="container-xl">
+      <a class="navbar-brand" [routerLink]="'/'">
+        <img src="https://utc2.edu.vn/logo-icon.png" alt="">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" [routerLink]="'/'">Trang chủ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="'/about'">Về chúng tôi</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="'/inspection'">Thông tin bảo trì</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="'/contact'">Thông tin liên hệ</a>
+          </li>
+          <li class="nav-item">
+              <a *ngIf="!userService.isLogged(); else elseBlock" class="nav-link" [routerLink]="'/login'">Đăng nhập</a>
+          </li>
+          <ng-template #elseBlock>
+              <li class="nav-item">
+                <a class="nav-link" [routerLink]="'/profile'">{{userService.getUser().name}}</a>
+              </li>
+          </ng-template>
+        </ul>
+        <div class="search-and-icons">
+          <form class="d-flex mb-2 me-2" role="search">
+            <input class="form-control me-2" type="search" aria-label="Search">
+          </form>
+          <li class="nav-item">
+            <button *ngIf="userService.isLogged()" class="btn-danger"><a class="nav-link" (click)="logOut()">Thoát</a></button>
+          </li>
+        </div>
+        <div class="contact-info d-md-flex">
+          <p>(028).3736.054</p>
+          <p><a href="mailto:">lienhe@st.utc2.edu.vn</a></p>
+        </div>
+      </div>
+    </div>
+  </nav>
