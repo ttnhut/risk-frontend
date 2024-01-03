@@ -5,6 +5,7 @@
             <th scope="col">Tên</th>
             <th scope="col">Ngày tạo</th>
             <th scope="col">Lớp học</th>
+            <th scope="col">Thiết bị</th>
             <th scope="col">Hình ảnh</th>
             <th scope="col">Được tạo bởi</th>
             <th scope="col">Cập nhật trạng thái</th>
@@ -25,6 +26,9 @@
             </td>
             <td>
                 {{risk.reportedClass.value}}
+            </td>
+            <td>
+                {{risk?.device?.value}}
             </td>
             <td>
                 <a [href]="risk.image" target="_blank"><img [src]="risk.image"/></a>

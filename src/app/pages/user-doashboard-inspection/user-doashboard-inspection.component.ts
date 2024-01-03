@@ -66,6 +66,8 @@ export class UserDoashboardInspectionComponent {
     for (let progress of this.progressTypes) {
       if (progress.value == event.target.value) {
         progressId = progress.id
+        console.log("PROGRESS")
+        console.log(progressId)
       }
     }
     this.riskService.updateProgressRisk(riskId, progressId).subscribe({

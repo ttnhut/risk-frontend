@@ -25,6 +25,16 @@
 			<div class="row">
 				<div class="col-md-6">
 					<div class="form-group">
+						<label>Thiết bị</label>
+                        <select [(ngModel)]="risk.device.id" id="dropdown" name="device" class="form-control" required>   
+                            <ng-container *ngFor="let deviceType of deviceTypes; let i = index">
+                              <option [value]="deviceType.id">{{ deviceType.value }}</option>
+                            </ng-container>    
+                        </select>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
 						<label id="number-label" for="number">Hình ảnh</label>
 						<input (change) = "onChangeFileField($event)" type="file" name="age" id="number" min="10" max="99" class="form-control" placeholder="Age" >
 					</div>
@@ -54,7 +64,7 @@
 						<label>Loại</label>
 						<select [(ngModel)]="risk.riskType.id" id="dropdown" name="type" class="form-control" required>   
                             <ng-container *ngFor="let riskType of riskTypes; let i = index">
-                              <option [value]="riskType.id">{{ riskType.value }}</option>
+                              <option *ngIf="riskType.value != 'NORMAL'" [value]="riskType.id">{{ riskType.value }}</option>
                             </ng-container>    
                         </select>
 					</div>

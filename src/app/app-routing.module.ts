@@ -14,6 +14,7 @@ import { AssignRiskComponent } from './pages/assign-risk/assign-risk.component';
 import { ChatComponent } from './pages/chat/chat.component';
 import { UserDoashboardInspectionComponent } from './pages/user-doashboard-inspection/user-doashboard-inspection.component';
 import { adminGuard } from './services/admin.guard';
+import { StaticticsComponent } from './pages/statictics/statictics.component';
 
 const routes: Routes = [
   {
@@ -58,6 +59,10 @@ const routes: Routes = [
       {
         path: 'chat',
         component: ChatComponent
+      },
+      {
+        path: 'statistics',
+        component: StaticticsComponent
       }
     ]
   },
@@ -82,6 +87,14 @@ const routes: Routes = [
       {
         path: 'chat',
         component: ChatComponent
+      },
+      {
+        path: 'add-ticket',
+        component: AddTicketComponent
+      },
+      {
+        path: 'statistics',
+        component: StaticticsComponent
       }
     ]
   }

@@ -19,6 +19,7 @@ import { UserDashboardMainComponent } from './pages/user-dashboard-main/user-das
 import { AssignRiskComponent } from './pages/assign-risk/assign-risk.component';
 import { ChatComponent } from './pages/chat/chat.component';
 import { UserDoashboardInspectionComponent } from './pages/user-doashboard-inspection/user-doashboard-inspection.component';
+import { StaticticsComponent } from './pages/statictics/statictics.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { UserDoashboardInspectionComponent } from './pages/user-doashboard-inspe
     AssignRiskComponent,
     ChatComponent,
     UserDoashboardInspectionComponent,
+    StaticticsComponent,
   ],
   imports: [
     BrowserModule,

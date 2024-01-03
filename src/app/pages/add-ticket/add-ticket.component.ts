@@ -6,6 +6,7 @@ import { Risk } from 'src/app/models/Risk';
 import { User } from 'src/app/models/User';
 import { MasterDataService } from 'src/app/services/master-data.service';
 import { RiskService } from 'src/app/services/risk.service';
+import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -18,6 +19,7 @@ export class AddTicketComponent implements OnInit{
   constructor(
     private masterDataService: MasterDataService,
     private riskService: RiskService,
+    private userService: UserService,
     private router: Router,
   ) {}
 
@@ -54,13 +56,22 @@ export class AddTicketComponent implements OnInit{
 
       }
     })
+    this.masterDataService.getMasterDataByType("DEVICE_TYPE").subscribe({
+      next: (data:any) => {
+           this.deviceTypes = data
+      },
+      error: (error) => {
+
+      }
+    })
   }
   public isDataSended = false
-  public risk = new Risk('','','','',new MasterData('','',''),new MasterData('','',''),new MasterData('','',''),new MasterData('','',''),new User('','','',''),new User('','','',''),new Date(),new Date())
+  public risk = new Risk('','','','',new MasterData('','',''),new MasterData('','',''),new MasterData('','',''),new MasterData('','',''),new MasterData('','',''),new User('','','',''),new User('','','',''),new Date(),new Date())
   public levelTypes !: MasterData[]
   public progressTypes !: MasterData[]
   public classTypes !: MasterData[]
   public riskTypes !: MasterData[]
+  public deviceTypes !: MasterData[]
   public file!: Blob
 
   onChangeFileField(event:any) {
@@ -95,9 +106,16 @@ export class AddTicketComponent implements OnInit{
             `,
             cancelButtonAriaLabel: "Thumbs down"
           });
-          this.router.navigate(['/user-dashboard/main']).then(() => {
-            document.location.reload()
-          })
+          if (this.userService.getUserRole() == 'ROLE_USER') {
+            this.router.navigate(['/user-dashboard/main']).then(() => {
+              document.location.reload()
+            })
+          }
+          else {
+            this.router.navigate(['/admin-dashboard/main']).then(() => {
+              document.location.reload()
+            })
+          }
           
         },
         error: (error) => {

@@ -8,5 +8,5 @@ export let API = {
     "users":"/users/",
     "risks":"/risks/",
     "masterdatas":"/masterdatas/",
-    "tracking":"/risks/tracking/"
+    "tracking":"/risks/tracking/",
 }

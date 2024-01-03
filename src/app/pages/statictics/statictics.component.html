@@ -1,0 +1,178 @@
+
+<!-- Card stats -->
+<div class="row g-6 mb-6">
+    <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">Số lượng đã hoàn thành của lớp học</span>
+                        <span class="h3 font-bold mb-0">{{trackingInformation?.completedTask}}</span>
+                    </div>
+                    <div class="col-auto">
+                        <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+                            <i class="bi bi-credit-card"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2 mb-0 text-sm">
+                    <span class="badge badge-pill bg-soft-success text-success me-2">
+                        <i class="bi bi-arrow-up me-1"></i>13%
+                    </span>
+                    <span class="text-nowrap text-xs text-muted">Since last month</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">Số lượng đang xử lý của lớp học</span>
+                        <span class="h3 font-bold mb-0">{{trackingInformation?.inProgressTask}}</span>
+                    </div>
+                    <div class="col-auto">
+                        <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
+                            <i class="bi bi-people"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2 mb-0 text-sm">
+                    <span class="badge badge-pill bg-soft-success text-success me-2">
+                        <i class="bi bi-arrow-up me-1"></i>30%
+                    </span>
+                    <span class="text-nowrap text-xs text-muted">Since last month</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">Số lượng đang chờ của lớp học</span>
+                        <span class="h3 font-bold mb-0">{{trackingInformation?.newTask}}</span>
+                    </div>
+                    <div class="col-auto">
+                        <div class="icon icon-shape bg-info text-white text-lg rounded-circle">
+                            <i class="bi bi-clock-history"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2 mb-0 text-sm">
+                    <span class="badge badge-pill bg-soft-danger text-danger me-2">
+                        <i class="bi bi-arrow-down me-1"></i>-5%
+                    </span>
+                    <span class="text-nowrap text-xs text-muted">Since last month</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<form>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Chọn lớp học để thống kê</label>
+      <select (change)="tracking($event)" [(ngModel)]="classID" id="dropdown" name="classID" class="form-control" required>   
+        <ng-container *ngFor="let classType of classTypes; let i = index">
+          <option [value]="classType.id">{{ classType.value }}</option>
+        </ng-container>    
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Thiết bị</label>
+        <select (change)="tracking($event)" [(ngModel)]="deviceFilter" id="dropdown" name="device" class="form-control" required>   
+            <ng-container *ngFor="let deviceType of deviceTypes; let i = index">
+              <option [value]="deviceType.id">{{ deviceType.value }}</option>
+            </ng-container>    
+        </select>
+    </div>
+    <div *ngIf="isDataSended">
+        <div class="spinner-border" role="status">
+        </div>
+      </div>
+  </form>
+
+<table class="table table-hover table-nowrap table-responsive">
+    
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">Tên</th>
+            <th scope="col">Ngày tạo</th>
+            <th scope="col">Lớp học</th>
+            <th scope="col">Thiết bị</th>
+            <th scope="col">Hình ảnh</th>
+            <th scope="col">Đang được xử lý bởi ai</th>
+            <th scope="col">Trạng thái</th>
+            <th scope="col">Ngày hoàn thành</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let risk of rirksOfClass; index as i">
+            <td>
+                <img alt="..." src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="avatar avatar-sm rounded-circle me-2">
+                <a class="text-heading font-semibold" href="#">
+                    {{risk.name}}
+                </a>
+            </td>
+            <td>
+                {{risk.createdDate | date:'dd/MM/Y'}}
+            </td>
+            <td>
+                {{risk.reportedClass.value}}
+            </td>
+            <td>
+                {{risk?.device?.value}}
+            </td>
+            <td>
+                <a [href]="risk.image" target="_blank"><img [src]="risk.image"/></a>
+            </td>
+            <td>
+                <span class="badge badge-lg badge-dot">
+                    <span *ngIf="risk.assignee != null; else nonAssignee"><i class="bg-success"></i> {{risk.assignee.email}}</span>
+                    <ng-template #nonAssignee>
+                        <i class="bg-danger"></i>Chưa có người xử lý
+                    </ng-template>
+                </span>
+            </td>
+            <td>
+                {{risk.progress.value}} 
+            </td>
+            <td>
+                <span class="badge badge-lg badge-dot">
+                    <span *ngIf="risk.completedDate != null; else nonCreatedDate"><i class="bg-success"></i> {{risk.completedDate | date:'dd/MM/Y'}}</span>
+                    <ng-template #nonCreatedDate>
+                        <i class="bg-danger"></i>Đang xử lý
+                    </ng-template>
+                </span>
+            </td>
+            <td class="text-end">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn" data-bs-toggle="modal" [attr.data-bs-target]="'#exampleModal' + i">
+                    Xem mô tả
+                </button>
+            </td>
+            <!-- Modal -->
+            <div class="modal fade #exampleModal{{i}}" id="exampleModal{{i}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content modalSize">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Mô tả vấn đề</h5>
+                    </div>
+                    <div class="modal-body">
+                        {{risk.description}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </tr>                                                                                                                                                                                                                                                       
+    </tbody>
+</table>

@@ -38,8 +38,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a *ngIf="userService.getUserRole() == 'ROLE_USER'" class="nav-link" [routerLink]="'/user-dashboard/statistics'">
                             <i class="bi bi-bar-chart"></i> Thống kê
+                        </a>
+                        <a *ngIf="userService.getUserRole() == 'ROLE_ADMIN'" class="nav-link" [routerLink]="'/admin-dashboard/statistics'">
+                            <i class="bi bi-bar-chart"></i> Thông kê
                         </a>
                     </li>
                     <li class="nav-item">
@@ -90,7 +93,13 @@
                         <!-- Actions -->
                         <div class="col-sm-6 col-12 text-sm-end">
                             <div class="mx-n1">
-                                <a [routerLink]="'/user-dashboard/add-ticket'" class="btn d-inline-flex btn-sm btn-primary mx-1">
+                                <a *ngIf="userService.getUserRole() == 'ROLE_USER'" [routerLink]="'/user-dashboard/add-ticket'" class="btn d-inline-flex btn-sm btn-primary mx-1">
+                                    <span class=" pe-2">
+                                        <i class="bi bi-plus"></i>
+                                    </span>
+                                    <span>Thêm ticket</span>
+                                </a>
+                                <a *ngIf="userService.getUserRole() == 'ROLE_ADMIN'" [routerLink]="'/admin-dashboard/add-ticket'" class="btn d-inline-flex btn-sm btn-primary mx-1">
                                     <span class=" pe-2">
                                         <i class="bi bi-plus"></i>
                                     </span>

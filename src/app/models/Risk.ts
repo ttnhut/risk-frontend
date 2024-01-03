@@ -11,6 +11,7 @@ export class Risk {
         public progress: MasterData,
         public reportedClass: MasterData,
         public riskType: MasterData,
+        public device: MasterData,
         public assignee: User,
         public reporter: User,
         public createdDate: Date,
