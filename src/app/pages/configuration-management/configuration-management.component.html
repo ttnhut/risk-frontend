@@ -1,0 +1,108 @@
+
+<table class="table table-hover table-nowrap table-responsive">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">type</th>
+            <th scope="col">value</th>
+            <th> <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Thêm cấu hình
+              </button></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let masterdata of masterdatas; index as i">
+            <td>
+                <img alt="..." src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="avatar avatar-sm rounded-circle me-2">
+                <a class="text-heading font-semibold" href="#">
+                    {{masterdata.id}}
+                </a>
+            </td>
+            <td>
+                {{masterdata.type}}
+            </td>
+            <td>
+                {{masterdata.value}}
+            </td>
+            <td>
+                <button (click)="deleteConfiguration(masterdata.id)" type="button" class="btn btn-danger">
+                    Xóa cấu hình
+                  </button>
+                  <button type="button" class="btn btn-info" data-bs-toggle="modal" [attr.data-bs-target]="'#exampleModal2' + i">
+                    Sửa cấu hình
+                  </button>
+                  <!-- Modal -->
+<div class="modal fade" [id]="'exampleModal2' + i" tabindex="-1" aria-labelledby="exampleModal2Label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModal2Label">Chỉnh sửa cấu hình</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="input-group mb-3">
+                <div class="input-group-text">
+                  <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input">
+                </div>
+                <input [value]="masterdata.type" name="type" [(ngModel)]="masterdata.type" type="text" class="form-control" aria-label="Text input with checkbox" readonly>
+              </div>
+              
+              <div class="input-group">
+                <div class="input-group-text">
+                  <input class="form-check-input mt-0" type="radio" value="" aria-label="Radio button for following text input">
+                </div>
+                <input [(ngModel)]="masterdata1.value" name="value" type="text" class="form-control" aria-label="Text input with checkbox" placeholder="Nhập giá trị cấu hình" >
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button (click)="updateConfiguration(masterdata.id, masterdata.type)" type="button" class="btn btn-primary">Lưu thay đổi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+                 
+                  
+            </td>
+           
+        </tr>                                                                                                                                                                                                                                                       
+    </tbody>
+</table>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Thêm cấu hình</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="input-group mb-3">
+                <div class="input-group-text">
+                    <span style="text-align: center;">Chọn loại cấu hình</span>
+                </div>
+                <div class="input-group-text">
+                    <select [(ngModel)]="masterdata1.type">
+                        <ng-container *ngFor="let m of masterDataTitle">
+                            <option [value]="m">{{m}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+              </div>
+              
+              <div class="input-group">
+                <div class="input-group-text">
+                    <span style="text-align: center;">Nhập giá trị cấu hình</span>
+                </div>
+                <input [(ngModel)]="masterdata1.value" type="text" class="form-control" aria-label="Text input with radio button">
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button (click)="saveMasterData()" type="button" class="btn btn-primary">Lưu thay đổi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+

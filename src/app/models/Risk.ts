@@ -15,6 +15,8 @@ export class Risk {
         public assignee: User,
         public reporter: User,
         public createdDate: Date,
-        public completedDate: Date | null
+        public completedDate: Date | null,
+        public message: string,
+        public messages: MasterData[]
     ) {}
 }

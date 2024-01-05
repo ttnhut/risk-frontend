@@ -9,4 +9,7 @@ export let API = {
     "risks":"/risks/",
     "masterdatas":"/masterdatas/",
     "tracking":"/risks/tracking/",
+    "roles":"/roles/",
+    "configurations":"/masterdatas/",
+    "recommendclass":"recommend"
 }

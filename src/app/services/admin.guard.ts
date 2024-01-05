@@ -6,7 +6,7 @@ import { UserService } from './user.service';
 export const adminGuard: CanActivateFn = (route, state) => {
   const userService = inject(UserService)
   const router = inject(Router)
-  if (userService.getUserRole() == "ROLE_ADMIN" && userService.isLogged()) {
+  if ((userService.getUserRole() == "ROLE_ADMIN" ||  userService.getUserRole() == "ROLE_SYSTEM_ADMIN")&& userService.isLogged()) {
     return true;
   }
   else {

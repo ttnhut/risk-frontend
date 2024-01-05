@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MasterData } from 'src/app/models/MasterData';
 import { Risk } from 'src/app/models/Risk';
+import { Role } from 'src/app/models/Role';
 import { User } from 'src/app/models/User';
 import { MasterDataService } from 'src/app/services/master-data.service';
 import { RiskService } from 'src/app/services/risk.service';
@@ -66,7 +67,7 @@ export class AddTicketComponent implements OnInit{
     })
   }
   public isDataSended = false
-  public risk = new Risk('','','','',new MasterData('','',''),new MasterData('','',''),new MasterData('','',''),new MasterData('','',''),new MasterData('','',''),new User('','','',''),new User('','','',''),new Date(),new Date())
+  public risk = new Risk('','','','',new MasterData('','',''),new MasterData('','',''),new MasterData('','',''),new MasterData('','',''),new MasterData('','',''),new User('','','','', this.userService.getUser().role, ''),new User('','','','', this.userService.getUser().role, ''),new Date(),new Date(), '', [])
   public levelTypes !: MasterData[]
   public progressTypes !: MasterData[]
   public classTypes !: MasterData[]

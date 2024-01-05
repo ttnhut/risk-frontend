@@ -15,6 +15,7 @@ import { ChatComponent } from './pages/chat/chat.component';
 import { UserDoashboardInspectionComponent } from './pages/user-doashboard-inspection/user-doashboard-inspection.component';
 import { adminGuard } from './services/admin.guard';
 import { StaticticsComponent } from './pages/statictics/statictics.component';
+import { ConfigurationManagementComponent } from './pages/configuration-management/configuration-management.component';
 
 const routes: Routes = [
   {
@@ -95,6 +96,16 @@ const routes: Routes = [
       {
         path: 'statistics',
         component: StaticticsComponent
+      }
+    ]
+  },
+  {
+    path: 'system-admin-dashboard',
+    component: UserDashboardComponent,
+    children: [
+      {
+        path: 'configuration-management',
+        component: ConfigurationManagementComponent
       }
     ]
   }

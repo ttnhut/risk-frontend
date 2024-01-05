@@ -26,7 +26,7 @@ export class SignupComponent implements OnInit{
     })
   }
 
-  public user = new User('','','','')
+  public user = new User('','','','', null, '')
   public file!: Blob
   public userTypes!: MasterData[]
   public isDataSended = false

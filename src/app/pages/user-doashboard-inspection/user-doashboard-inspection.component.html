@@ -2,6 +2,7 @@
 <table class="table table-hover table-nowrap table-responsive">
     <thead class="thead-light">
         <tr>
+            <th scope="col">Cấp độ</th>
             <th scope="col">Tên</th>
             <th scope="col">Ngày tạo</th>
             <th scope="col">Lớp học</th>
@@ -15,6 +16,24 @@
     </thead>
     <tbody>
         <tr *ngFor="let risk of rirksOfUser; index as i">
+            <td>
+                <select (change)="saveLevel($event, risk.id)">
+                    <ng-container *ngFor="let levelType of levelTypes">
+                        <option [value]="levelType.id" *ngIf="risk.level.value == 'DANGEROUS' && levelType.value == 'DANGEROUS'" style="color: red;" selected>{{levelType.value}}</option>
+                        <option [value]="levelType.id" *ngIf="risk.level.value != 'DANGEROUS' && levelType.value == 'DANGEROUS'" style="color: red;" >{{levelType.value}}</option>
+                        <option [value]="levelType.id" *ngIf="risk.level.value == 'MEDIUM' && levelType.value == 'MEDIUM'" style="color: rgb(167, 127, 68);" selected>{{levelType.value}}</option>
+                        <option [value]="levelType.id" *ngIf="risk.level.value != 'MEDIUM' && levelType.value == 'MEDIUM'" style="color: rgb(202, 120, 26);" >{{levelType.value}}</option>
+                        <option [value]="levelType.id" *ngIf="risk.level.value == 'NORMAL' && levelType.value == 'NORMAL'" style="color: rgb(122, 201, 168);" selected>{{levelType.value}}</option>
+                        <option [value]="levelType.id" *ngIf="risk.level.value != 'NORMAL' && levelType.value == 'NORMAL'" style="color: rgb(122, 201, 168);" >{{levelType.value}}</option>
+                    </ng-container>
+                </select>
+                <input (change)="changeMessage($event)" name="message" type="text" placeholder="Nhập lý do cập nhật cấp độ" class="forms_field-input" required />
+
+                <div *ngIf="isDataSended">
+                    <div class="spinner-border" role="status">
+                    </div>
+                  </div>
+            </td>
             <td>
                 <img alt="..." src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="avatar avatar-sm rounded-circle me-2">
                 <a class="text-heading font-semibold" href="#">
@@ -42,7 +61,7 @@
                 </span>
             </td>
             <td>
-                <select (change)="updateRisk($event, risk.id)">
+                <select (change)="updateRisk($event, risk.id, risk.progress.value)">
                    
                     <ng-container *ngFor="let progressType of progressTypes">
                         <option *ngIf="progressType.value == risk.progress.value" selected>{{progressType.value}}</option>
@@ -50,6 +69,8 @@
                     </ng-container>
                   
                 </select>
+                <input (change)="changeMessage($event)" name="message" type="text" placeholder="Nhập lời nhắn của bạn" class="forms_field-input" required />
+        
                 <div *ngIf="isDataSended">
                     <div class="spinner-border" role="status">
                     </div>
@@ -75,13 +96,21 @@
             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div class="modal-content modalSize">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Mô tả vấn đề</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Mô tả vấn đề và lời nhắn của người bảo trì</h5>
                         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
+
                     </div>
                     <div class="modal-body">
-                        {{risk.description}}
+                        Mô tả vấn đề: {{risk.description}}
+                        <span>
+                            <strong><br/>Lời nhắn của người bảo trì:</strong>
+                        </span>
+                        <span *ngFor="let messageType of risk.messages">
+                            <br/><em>Trạng thái </em>{{messageType.value}}
+                        </span>
+               
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

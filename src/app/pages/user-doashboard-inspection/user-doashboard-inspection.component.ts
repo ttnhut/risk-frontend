@@ -54,13 +54,30 @@ export class UserDoashboardInspectionComponent {
 
       }
     })
+    this.masterDataService.getMasterDataByType("LEVEL_TYPE").subscribe({
+      next: (data:any) => {
+           this.levelTypes = data
+      },
+      error: (error) => {
+
+      }
+    })
   }
 
   public rirksOfUser !: Risk[]
   public progressTypes: MasterData[] = []
+  public levelTypes: MasterData[] = []
   public isDataSended = false
+  public message!: string
+  public levelID!: string
 
-  updateRisk(event: any, riskId: string) {
+  updateRisk(event: any, riskId: string, message: string) {
+    if (message == 'NEW') {
+      message = 'IN-PROGRESS'
+    }
+    else {
+      message = 'COMPLETED'
+    }
     this.isDataSended = true
     let progressId: string = ''
     for (let progress of this.progressTypes) {
@@ -70,7 +87,7 @@ export class UserDoashboardInspectionComponent {
         console.log(progressId)
       }
     }
-    this.riskService.updateProgressRisk(riskId, progressId).subscribe({
+    this.riskService.updateProgressRisk(riskId, progressId,message + ': ' + this.message, this.levelID).subscribe({
       next: (data) => {
         console.log(data)
         let isChecked = Swal.fire({
@@ -104,6 +121,71 @@ export class UserDoashboardInspectionComponent {
          html: `
          <div class="alert alert-danger" role="alert">
              Vui lòng liên hệ quản trị viên nếu không cập nhật được trạng thái tác vụ
+         </div>
+         `,
+  
+         focusConfirm: false,
+         confirmButtonText: `
+           OK
+         `,
+         confirmButtonAriaLabel: "Thumbs up, great!",
+         cancelButtonText: `
+           Hủy
+         `,
+         cancelButtonAriaLabel: "Thumbs down"
+       });
+       this.isDataSended = false
+       isChecked.then(result => {
+        if (result.value == true) {
+          window.location.reload()
+        }
+       })
+     },
+     complete: () => {
+       this.isDataSended = false
+     }
+    })
+  }
+  changeMessage(event: any) {
+    this.message = event.target.value
+  }
+  saveLevel(event: any, riskID: string) {
+    this.isDataSended = true
+    this.levelID = event.target.value
+    this.riskService.updateProgressRisk(riskID, '','Lý do cập nhật cấp độ' + ': ' + this.message, this.levelID).subscribe({
+      next: (data) => {
+        console.log(data)
+        let isChecked = Swal.fire({
+         title: "Cập nhật cấp độ thành công",
+         icon: "info",
+         html: `
+         <div class="alert alert-light" role="alert">
+         Email thông báo trạng thái đã được gửi cho người tạo vấn đề
+       </div>
+         `,
+         focusConfirm: false,
+         confirmButtonText: `
+           OK
+         `,
+         confirmButtonAriaLabel: "Thumbs up, great!",
+         cancelButtonText: `
+           Hủy
+         `,
+         cancelButtonAriaLabel: "Thumbs down"
+       });
+       isChecked.then(result => {
+        if (result.value == true) {
+          window.location.reload()
+        }
+       })
+     },
+     error: (error) => {
+       let isChecked = Swal.fire({
+         title: "Có lỗi đã xảy ra!",
+         icon: "error",
+         html: `
+         <div class="alert alert-danger" role="alert">
+             Vui lòng liên hệ quản trị viên nếu không cập nhật được cấp độ
          </div>
          `,
   

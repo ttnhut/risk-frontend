@@ -20,6 +20,7 @@ import { AssignRiskComponent } from './pages/assign-risk/assign-risk.component';
 import { ChatComponent } from './pages/chat/chat.component';
 import { UserDoashboardInspectionComponent } from './pages/user-doashboard-inspection/user-doashboard-inspection.component';
 import { StaticticsComponent } from './pages/statictics/statictics.component';
+import { ConfigurationManagementComponent } from './pages/configuration-management/configuration-management.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { StaticticsComponent } from './pages/statictics/statictics.component';
     ChatComponent,
     UserDoashboardInspectionComponent,
     StaticticsComponent,
+    ConfigurationManagementComponent,
   ],
   imports: [
     BrowserModule,

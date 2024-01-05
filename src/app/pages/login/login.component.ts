@@ -14,7 +14,7 @@ export class LoginComponent {
     private userService: UserService
   ) {}
 
-  public user = new User('','','','')
+  public user = new User('','','','', null, '')
   public isDataSended = false
 
   loginUser() {
@@ -26,6 +26,9 @@ export class LoginComponent {
         }
         else if (this.userService.getUserRole() == "ROLE_ADMIN") {
           window.location.href = "/admin-dashboard/main"
+        }
+        else if (this.userService.getUserRole() == "ROLE_SYSTEM_ADMIN") {
+          window.location.href = "/system-admin-dashboard/configuration-management"
         }
         else {
           this.userService.logout()

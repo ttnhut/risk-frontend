@@ -5,6 +5,7 @@ import baseURL, { API } from './helper';
 import { MasterData } from '../models/MasterData';
 import { User } from '../models/User';
 import { UserService } from './user.service';
+import { MasterDataService } from './master-data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class RiskService {
 
   constructor(
     private http: HttpClient,
-    private userService: UserService
+    private userService: UserService,
+    public masterDataService: MasterDataService
   ) { }
 
   public addRisk(risk: Risk, file:Blob) {
@@ -41,11 +43,11 @@ export class RiskService {
   }
 
   public assignRisk(riskId:string | null) {
-    return this.http.put(`${baseURL}${API['risks']}${riskId}/`, new Risk('','','','',new MasterData('','',''),new MasterData('','',''),new MasterData('','',''),new MasterData('','',''),new MasterData('','',''),new User(this.userService.getUser().email,'','',''),new User('','','',''),new Date(),null))
+    return this.http.put(`${baseURL}${API['risks']}${riskId}/`, new Risk('','','','',new MasterData('','',''),new MasterData('','',''),new MasterData('','',''),new MasterData('','',''),new MasterData('','',''),new User(this.userService.getUser().email,'','','',this.userService.getUser().role, ''),new User('','','','', this.userService.getUser().role, ''),new Date(),null, '', []))
   }
 
-  public updateProgressRisk(riskId:string | null, progressId: string) {
-    return this.http.put(`${baseURL}${API['risks']}${riskId}/`, new Risk('','','','',new MasterData('','',''),new MasterData(progressId,'',''),new MasterData('','',''),new MasterData('','',''),new MasterData('','',''),new User('','','',''),new User('','','',''),new Date(),null))
+  public updateProgressRisk(riskId:string | null, progressId: string, message: string, levelId: string) {
+    return this.http.put(`${baseURL}${API['risks']}${riskId}/`, new Risk('','','','',new MasterData(levelId,'',''),new MasterData(progressId,'',''),new MasterData('','',''),new MasterData('','',''),new MasterData('','',''),new User('','','','', this.userService.getUser().role, ''),new User('','','','', this.userService.getUser().role, ''),new Date(),null, message, []))
   }
 
   public getTrackingInformation() {
@@ -54,5 +56,9 @@ export class RiskService {
 
   public getTrackingInformationByClass(classID: string) {
     return this.http.get(`${baseURL}${API['tracking']}?classID=${classID}`)
+  }
+
+  public recommendClass() {
+    return this.http.get(`${baseURL}${API['masterdatas']}${API['recommendclass']}`)
   }
 }

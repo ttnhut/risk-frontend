@@ -30,7 +30,7 @@ export const loginPageGuard: CanActivateFn = (route, state) => {
       `,
       cancelButtonAriaLabel: "Thumbs down"
     });
-    router.navigate(['/user-dashboard'])
+    router.navigate(['/home'])
   }
   return false;
 };

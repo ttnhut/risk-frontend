@@ -20,6 +20,14 @@ export class StaticticsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    this.riskService.recommendClass().subscribe({
+      next: (data: any) => {
+        this.recommend = data.recommendClass
+        console.log(this.recommend)
+      }
+    })
+
     this.masterDataService.getMasterDataByType("CLASS_TYPE").subscribe({
       next: (data:any) => {
            this.classTypes = data
@@ -45,6 +53,7 @@ export class StaticticsComponent implements OnInit {
   public classTypes !: MasterData[]
   public deviceTypes!: MasterData[]
   public deviceFilter: string = ''
+  public recommend!: string
 
   tracking(event: any) {
     this.isDataSended = true
